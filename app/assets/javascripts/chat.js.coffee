@@ -10,6 +10,21 @@ $ ->
   	console.log('Websocketの接続ができました: ', data)
   	return
 
+  success = (response) ->
+  	console.log("confirmationイベントが発生しました: " + response.message)
+  	return
+
+
+	failure = (response) ->
+  	console.log("confirmationイベント生成に失敗しました " + response.message)
+  	return
+
+	object_to_send = 
+		data: 'test'
+
+	# イベントの発生確認
+	ws_rails.trigger('confirmation', object_to_send, success, failure)
+
 
 
 	  # メッセージ受信時の処理

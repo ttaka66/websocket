@@ -16,6 +16,23 @@ WebsocketRails::EventMap.describe do
 
   
   # 　subscribe :イベント名, to: コントローラー名, with_method: :アクション名
+  
+  # The :client_connected method is fired automatically when a new client connects
+  subscribe :client_connected, to: WebsocketChatController, with_method: :client_connected
+
+  # You can subscribe any number of controller actions to a single event
+  subscribe :new_message, to: WebsocketChatController, with_method: :new_message
+  # subscribe :new_message, to: ChatLogController, with_method: :log_message
+
+  subscribe :new_user, to: WebsocketChatController, with_method: :new_user
+  subscribe :change_username, to: WebsocketChatController, with_method: :change_username
+
+  namespace :product do
+    subscribe :new, to: ProductController, with_method: :new_product
+  end
+
+  # The :client_disconnected method is fired automatically when a client disconnects
+  subscribe :client_disconnected, to: WebsocketChatController, with_method: :delete_user
 
   subscribe :websocket_chat, to: WebsocketChatController, with_method: :message_recieve
   subscribe :confirmation, to: WebsocketChatController, with_method: :connect_confirmation
