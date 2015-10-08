@@ -5,6 +5,11 @@
 $ ->
 	ws_rails = new WebSocketRails("192.168.33.10:3000/websocket")
 
+	# 接続確認関数
+	ws_rails.on_open = (data) ->
+  	console.log('Websocketの接続ができました: ', data)
+  	return
+
 
 
 	  # メッセージ受信時の処理
