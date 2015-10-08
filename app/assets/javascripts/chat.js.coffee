@@ -11,19 +11,24 @@ $ ->
   	return
 
   success = (response) ->
-  	console.log("confirmationイベントが発生しました: " + response.message)
+  	console.log("event_confirmationイベントが発生しました: " + response.message)
   	return
 
 
 	failure = (response) ->
-  	console.log("confirmationイベント生成に失敗しました " + response.message)
+  	console.log("event_confirmationイベント生成に失敗しました " + response.message)
   	return
 
 	object_to_send = 
 		data: 'test'
 
+	# イベントの起動確認
+	ws_rails.trigger('event_confirmation', object_to_send, success, failure)
+
 	# イベントの発生確認
-	ws_rails.trigger('confirmation', object_to_send, success, failure)
+	ws_rails.bind 'event_confirmation', (data) ->
+  	console.log(data.message) # would output 'this is a message'
+  	return
 
 
 

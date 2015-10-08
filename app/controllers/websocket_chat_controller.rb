@@ -2,6 +2,10 @@
 
 class WebsocketChatController < WebsocketRails::BaseController
 
+	before_filter :only => :new_message do
+    puts "new_message was called"
+  end
+
 	def initialize_session
     # perform application setup here
     controller_store[:message_count] = 0
@@ -29,9 +33,12 @@ class WebsocketChatController < WebsocketRails::BaseController
   end
 
   # イベントをクライアントに送る
-  # def new_message
-  # 	new_message = {:message => 'this is a message'}
-		# send_message :new_message, new_message
-  # end
+  def event_confirmation
+  	recieve_message = message()
+  	new_message = {:message => recieve_message}
+
+  	# new_message = {:message => 'this is a message'}
+		send_message :event_confirmation, new_message
+  end
 
 end
