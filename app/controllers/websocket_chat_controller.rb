@@ -11,22 +11,6 @@ class WebsocketChatController < WebsocketRails::BaseController
     controller_store[:message_count] = 0
   end
 
-  def message_recieve
-
-
-
-　　# クライアントからのメッセージを取得
-
-　　recieve_message = message()
-
-
-
-　　# websocket_chatイベントで接続しているクライアントにブロードキャスト
-
-　　broadcast_message(:websocket_chat, recieve_message)
-
-  end
-
   def connect_confirmation
   	broadcast_message(:confirmation, recieve_message)
 
@@ -39,6 +23,14 @@ class WebsocketChatController < WebsocketRails::BaseController
 
   	# new_message = {:message => 'this is a message'}
 		send_message :event_confirmation, new_message
+  end
+
+  def add_chat
+  	recieve_message = message()
+  	new_message = {:message => recieve_message}
+
+  	# new_message = {:message => 'this is a message'}
+		broadcast_message :add_chat, new_message
   end
 
 end

@@ -30,28 +30,7 @@ $ ->
   	console.log(data.message) # would output 'this is a message'
   	return
 
-
-
-	  # メッセージ受信時の処理
-
-	ws_rails.bind "websocket_chat", (message) ->
-
-		$("p").text = "hello"
-
-		alert "hello"
-
-		# message_li = document.createElement("li");
-
-		# message_li.textContent = message;
-
-		# document.getElementById("chat_area").appendChild(message_li);
-
-		return
-
-
-
-
-	# メッセージ送信時の処理
+  # メッセージ送信時の処理
 
 	$("#send").click ->
 
@@ -60,11 +39,18 @@ $ ->
 
 	  comment = $("#comment").val()
 
-	  ws_rails.trigger "websocket_chat", comment
+	  ws_rails.trigger('add_chat', comment)
 
 	  alert comment
 
 	  return
+
+	# メッセージ受信時の処理
+	ws_rails.bind 'add_chat', (data) ->
+  	console.log(data.message) # would output 'this is a message'
+  	li = $('<li>').prepend(data.message)
+  	$('#chat_area').prepend(li)
+  	return
 
 	return
 
